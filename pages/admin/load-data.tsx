@@ -11,6 +11,7 @@ const LoadData: NextPage = () => {
   const [imageList, setImageList] = useState([]);
   const [photo, setPhoto] = useState();
   const imageListRef = ref(storage, "/");
+  
   useEffect(() => {
     listAll(imageListRef).then((res) => {
       res.prefixes.forEach((folderRef) => {

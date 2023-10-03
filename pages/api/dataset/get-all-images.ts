@@ -13,28 +13,39 @@ export default async function handler(
     await connectDb();
     // const { user } = req.body;
     const storageRef = ref(storage);
-    listAll(storageRef)
-      .then((res) => {
-        res.prefixes.forEach((prefixref) => {
-          listAll(prefixref).then((items) => {
-            items.items
-            
-          });
-        });
-        // return Promise.all(urls);
-      })
-      .then((res) => {
-        // console.log(res);
-        // res.
-      });
 
+    const prom = new Promise((resolve, reject) => {
+      var files = [];
+      listAll(storageRef)
+        .then((res) => {
+          res.prefixes.forEach((folderRef) => {
+            listAll(folderRef).then((res) => {
+              res.items.forEach((res) => {
+                getDownloadURL(res).then((res) => {
+                  files.push(res);
+                });
+              });
+            });
+          });
+        })
+        .then((res) => {
+          resolve(files);
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+
+    var files = await prom;
+
+    console.log(files);
     // const fileurls = await prom;
     // console.log(fileurls);
     // console
     // res.end();
     res.json({
       status: "success",
-      //   fileurls,
+      files,
     });
   } catch (e) {
     console.log(e);
