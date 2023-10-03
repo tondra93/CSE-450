@@ -7,6 +7,7 @@ import { tagOptions } from "../utils/const";
 import Dataset from "../lib/models/dataset";
 import AnnotatorNavbar from "../components/annotatorNavbar";
 import { webSiteUrl } from "../utils/urls";
+
 const Validation = ({ sentence }) => {
   const [tags, setTags] = useState(sentence.tags);
   const [tagId, setTagid] = useState([]);

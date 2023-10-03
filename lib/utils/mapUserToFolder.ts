@@ -1,9 +1,6 @@
-import connectDb from "../../../lib/db";
-import User from "../../../lib/models/user";
-// import mapUserToFolder from "../../../lib/utils/mapUserToFolder";
-import { getStorage, ref, listAll } from "firebase/storage";
-import { storage } from "../../../lib/src/firebase";
-import userAnnotationModel from "../../../lib/models/user-annotation";
+import { listAll, ref } from "firebase/storage";
+import { storage } from "../src/firebase";
+import userAnnotationModel from "../models/user-annotation";
 
 const mapUserToFolder = async (user) => {
   const listRef = ref(storage);
@@ -52,23 +49,4 @@ const mapUserToFolder = async (user) => {
   }
 };
 
-export default async function handler(req, res) {
-  const { values } = req.body;
-  await connectDb();
-
-  try {
-    const newAnnotator = new User({
-      email: values.email,
-      name: values.name,
-      password: values.password,
-      role: values.role,
-    });
-
-    const annotator = await newAnnotator.save();
-    mapUserToFolder(annotator);
-    res.json({ annotator });
-  } catch (err) {
-    console.log({ err });
-    res.json({ err });
-  }
-}
+export default mapUserToFolder;

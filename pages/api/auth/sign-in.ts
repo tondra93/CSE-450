@@ -4,6 +4,56 @@ import User from "../../../lib/models/user";
 import createToken from "../token";
 import cookie from "cookie";
 import bcrypt from "bcryptjs";
+import { getStorage, ref, listAll } from "firebase/storage";
+import { storage } from "../../../lib/src/firebase";
+import userAnnotationModel from "../../../lib/models/user-annotation";
+
+const mapUserToFolder = async (user) => {
+  const listRef = ref(storage);
+  const userAnnodation = await userAnnotationModel.find({});
+
+  const folderNamesPromise = new Promise((resolve, reject) => {
+    const folderNames = [];
+    listAll(listRef)
+      .then((res) => {
+        res.prefixes.forEach((folderRef) => {
+          if (
+            !userAnnodation
+              .map((e) => e.annotationFolder)
+              .includes(folderRef.name)
+          ) {
+            folderNames.push(folderRef.name);
+          }
+        });
+      })
+      .then((final) => {
+        resolve(folderNames);
+      })
+      .catch((err) => {
+        reject("Error");
+      });
+  });
+  const folderNames = await folderNamesPromise;
+  console.log(userAnnodation.map((e) => e.user.toString()));
+  console.log("user", user._id);
+  console.log(
+    "users",
+    userAnnodation.map((e) => e.user.toString()).includes(user._id.toString())
+  );
+  if (
+    userAnnodation
+      .map((e) => e.user.toString())
+      .includes(user._id.toString()) == false
+  ) {
+    const annotationFolder =
+      folderNames[Math.floor(Math.random() * folderNames?.length)];
+    const newUserAnnotation = await userAnnotationModel.create({
+      user: user._id,
+      annotationFolder,
+    });
+    console.log(newUserAnnotation);
+  }
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -13,6 +63,8 @@ export default async function handler(
   try {
     await connectDb();
     const user = await User.findOne({ email });
+    mapUserToFolder(user);
+    // console.log(user);
 
     if (user) {
       const id = user._id.toString();

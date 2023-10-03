@@ -6,6 +6,9 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, required: true },
   isActive: { type: Boolean, default: true },
+  annotationFolder: {
+    type: String,
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

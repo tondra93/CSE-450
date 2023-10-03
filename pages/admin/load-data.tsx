@@ -17,8 +17,6 @@ const LoadData: NextPage = () => {
         listAll(folderRef).then((res) => {
           res.items.forEach((item) => {
             getDownloadURL(item).then((url) => {
-              // console.log(url);
-              // setImages(url);
               setImageList((prev: any) => {
                 const newState: any = [...prev];
                 newState.push(url);

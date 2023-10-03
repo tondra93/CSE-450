@@ -2,6 +2,7 @@ import connectDb from "../../lib/db";
 import Stats from "../../lib/models/stats";
 import User from "../../lib/models/user";
 import bcrypt from "bcryptjs";
+import mapUserToFolder from "../../lib/utils/mapUserToFolder";
 
 export default async function handler(req, res) {
   const { values } = req.body;
@@ -17,6 +18,7 @@ export default async function handler(req, res) {
       role: "annotator",
     });
     const user = await newUser.save();
+    mapUserToFolder(user);
     return res.json({ user });
   } catch (err) {
     console.log({ err });
