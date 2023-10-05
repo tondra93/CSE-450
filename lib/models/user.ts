@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
   annotationFolder: {
     type: String,
   },
+  lastAnnotated: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "annotations",
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

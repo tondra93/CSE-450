@@ -32,31 +32,31 @@ export default async function handler(
       .select("annotationFolder")
       .exec();
 
-    const prom = new Promise((resolve, reject) => {
-      const folderRef = ref(storage, folder.annotationFolder);
+    // const prom = new Promise((resolve, reject) => {
+    //   const folderRef = ref(storage, folder.annotationFolder);
 
-      listAll(folderRef)
-        .then((res) => {
-          const fileurls = res.items.map((itemRef) => {
-            return getDownloadURL(itemRef);
-          });
-          return Promise.all(fileurls);
-        })
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((e) => {
-          reject(e);
-        });
-    });
+    //   listAll(folderRef)
+    //     .then((res) => {
+    //       const fileurls = res.items.map((itemRef) => {
+    //         return getDownloadURL(itemRef);
+    //       });
+    //       return Promise.all(fileurls);
+    //     })
+    //     .then((res) => {
+    //       resolve(res);
+    //     })
+    //     .catch((e) => {
+    //       reject(e);
+    //     });
+    // });
 
-    const fileurls = await prom;
-    console.log(fileurls);
+    // const fileurls = await prom;
+    // console.log(fileurls);
     // console
     // res.end();
     res.json({
       status: "success",
-      fileurls,
+      annotationFolder: folder.annotationFolder,
     });
   } catch (e) {
     console.log(e);
