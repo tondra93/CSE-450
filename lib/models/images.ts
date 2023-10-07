@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
 const imageSchema = new mongoose.Schema({
-  url: {
+  imageUrl: {
     type: String,
+    max: 100,
   },
   imageType: {
     type: String,
+    max: 100,
   },
 });
 

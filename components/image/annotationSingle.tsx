@@ -1,5 +1,5 @@
 import { Button, Select } from "@mantine/core";
-import { TextInput, rem } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { Loader } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import { Slider } from "@mantine/core";
@@ -99,12 +99,10 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
+          marginTop: "20px",
         }}
       >
         <TextInput
-          //   leftSectionPointerEvents="none"
-          //   leftSection={icon}
-
           placeholder="Write the text of the picture"
           onChange={(e) => {
             setImageText(e.target.value);
@@ -112,7 +110,6 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
         />
         <Select
           data={targetAudienceOptions}
-          //   label="Target Audience"
           placeholder="Select Target Audience"
           value={targetAudience}
           onChange={(e) => {
@@ -121,7 +118,6 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
         />
         <Select
           data={classLabels}
-          //   label="Target Audience"
           placeholder="Select Class Label"
           value={classLabel}
           onChange={(e) => {
@@ -130,7 +126,6 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
         />
         <Select
           data={relevancePercantages}
-          //   label="Target Audience"
           placeholder="Relevance"
           value={relevance}
           onChange={(e) => {

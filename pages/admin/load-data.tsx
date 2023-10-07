@@ -48,19 +48,21 @@ const LoadData: NextPage = () => {
           },
         }
       );
+      // console.log(response.data.images);
+      setImageList(response.data.images);
       // console.log(response.data.annotationFolder);
-      const storageRef = ref(storage, response.data.annotationFolder);
-      listAll(storageRef).then((res) => {
-        res.items.forEach((item) => {
-          getDownloadURL(item).then((url) => {
-            setImageList((prev: any) => {
-              const newState: any = [...prev];
-              newState.push(url);
-              return newState;
-            });
-          });
-        });
-      });
+      // const storageRef = ref(storage, response.data.annotationFolder);
+      // listAll(storageRef).then((res) => {
+      //   res.items.forEach((item) => {
+      //     getDownloadURL(item).then((url) => {
+      //       setImageList((prev: any) => {
+      //         const newState: any = [...prev];
+      //         newState.push(url);
+      //         return newState;
+      //       });
+      //     });
+      //   });
+      // });
     } catch (e) {
       console.log(e);
     }
@@ -80,7 +82,7 @@ const LoadData: NextPage = () => {
   };
 
   useEffect(() => {
-    // getUserMappedFolder();
+    getUserMappedFolder();
   }, []);
 
   // useEffect(() => {

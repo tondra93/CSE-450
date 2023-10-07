@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import userAnnotationModel from "../../../lib/models/user-annotation";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../../lib/src/firebase";
+import mongoose from "mongoose";
 
 interface jwtPayload {
   id: string;
@@ -27,10 +28,39 @@ export default async function handler(
     const data = jwt.verify(token, process.env.JWT_SECRET) as jwtPayload;
     const userId = data.id;
 
-    const folder = await userAnnotationModel
-      .findOne({ user: userId })
-      .select("annotationFolder")
-      .exec();
+    // const folder = await userAnnotationModel
+    //   .findOne({ user: userId })
+    //   .select("annotationFolder")
+    //   .exec();
+
+    const images = await userAnnotationModel.aggregate([
+      {
+        $lookup: {
+          from: "images",
+          localField: "annotationFolder",
+          foreignField: "imageType",
+          as: "images",
+        },
+      },
+      // {
+      //   $unwind: {
+      //     path: "$images",
+      //     preserveNullAndEmptyArrays: true,
+      //   },
+      // },
+      {
+        $match: {
+          user: mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        $project: {
+          images: 1,
+        },
+      },
+    ]);
+
+    // console.log(images);
 
     // const prom = new Promise((resolve, reject) => {
     //   const folderRef = ref(storage, folder.annotationFolder);
@@ -56,7 +86,7 @@ export default async function handler(
     // res.end();
     res.json({
       status: "success",
-      annotationFolder: folder.annotationFolder,
+      images: images[0].images.map((e) => e.imageUrl),
     });
   } catch (e) {
     console.log(e);
