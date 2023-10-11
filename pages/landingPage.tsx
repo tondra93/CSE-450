@@ -29,7 +29,7 @@ const LandingPage = ({ children }) => {
           color: "white",
         }}
       >
-        <h2 style={{ textAlign: "center" }}>Name Entity Recognizer</h2>
+        <h2 style={{ textAlign: "center" }}>MultiModal Hate Meme Detection</h2>
         <hr style={{ width: "100%" }} />
         <Button
           onMouseEnter={() => setHover(true)}
