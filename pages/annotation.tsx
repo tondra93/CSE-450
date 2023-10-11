@@ -56,11 +56,11 @@ const Annotation = ({ doc }) => {
       token: localStorage.getItem("token"),
     });
     setValue(result.data);
-    setComment('');
-    setGenere('');
+    setComment("");
+    setGenere("");
   };
-  console.log({genre});
-  
+  console.log({ genre });
+
   return (
     <AnnotatorNavbar>
       <div>
@@ -116,7 +116,8 @@ export default Annotation;
 export async function getServerSideProps(ctx: any) {
   await connectDb();
   const { token } = ctx.req.cookies;
-  const { data } = await axios.get(`${webSiteUrl}/api/dataset/get-photo`, {
+  // const { data } = await axios.get(`${webSiteUrl}/api/dataset/get-photo`, {
+  const { data } = await axios.get(`/api/dataset/get-photo`, {
     token,
   });
   return {
