@@ -21,15 +21,15 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
 
   //   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
   const targetAudienceOptions = [
-    "Gents",
-    "Ladies",
+    "Male",
+    "Female",
     "Celebrity",
     "Religious",
     "Political",
     "Others",
   ];
   const classLabels = ["Hateful", "Non Hateful"];
-  const relevancePercantages = [0, 25, 50, 75, 100].map((e) => e.toString());
+  const relevancePercantages = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((e) => e.toString());
 
   const submitAnnotation = async () => {
     // console.log("annotation", annotation);
@@ -103,14 +103,14 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
         }}
       >
         <TextInput
-          placeholder="Write the text of the picture"
+          placeholder="Write the caption of the image"
           onChange={(e) => {
             setImageText(e.target.value);
           }}
         />
         <Select
           data={targetAudienceOptions}
-          placeholder="Select Target Audience"
+          placeholder="Select Category"
           value={targetAudience}
           onChange={(e) => {
             setTargetAudience(e);

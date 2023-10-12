@@ -136,7 +136,8 @@ export async function getServerSideProps(ctx: any) {
   // };
 
   const { data } = await axios.post(
-    `${webSiteUrl}/api/dataset/get-no-validate`,
+    //`${webSiteUrl}/api/dataset/get-no-validate`,
+    `/api/dataset/get-no-validate`,
     {
       token,
     }
