@@ -62,6 +62,7 @@ export default async function handler(
 
   try {
     await connectDb();
+    console.log("Hello");
     const user = await User.findOne({ email });
     mapUserToFolder(user);
     // console.log(user);
@@ -107,5 +108,6 @@ export default async function handler(
     }
   } catch (err) {
     console.log({ err });
+    console.log("Hello World");
   }
 }

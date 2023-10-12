@@ -13,7 +13,7 @@ let cached = global.mongoose;
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
-
+console.log(MONGODB_URI);
 async function connectDb() {
   if (cached.conn) {
     console.log("Already Connected to MongoDB");

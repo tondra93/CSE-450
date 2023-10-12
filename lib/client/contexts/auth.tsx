@@ -73,11 +73,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 router.pathname.startsWith("/admin")) &&
               role === "annotator"
             ) {
-              router.push("/annotation");
+              router.push("/annotationSingle");
             }
             if (
               (router.pathname === "/" ||
-                router.pathname.startsWith("/annotation")) &&
+                router.pathname.startsWith("/annotationSingle")) &&
               role === "admin"
             ) {
               router.replace("/admin");
@@ -119,7 +119,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (role === "admin") {
         router.push(`/${role}`);
       } else {
-        router.push("/annotation");
+        router.push("/annotationSingle");
       }
       setLoading(false);
       return { status: "success", message };
