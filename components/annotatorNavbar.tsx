@@ -11,21 +11,13 @@ const AnnotatorNavbar = ({ children }) => {
     const response = signOut();
   };
   const items = [
-    {
-      name: "Annotated Data",
-      url: `/${user.id}`,
-    },
-    {
-      name: "Annotation",
-      url: "/annotation",
-    },
     // {
-    //   name: "Annotation Batch",
-    //   url: "/annotation-batch",
+    //   name: "Annotated Data",
+    //   url: `/${user.id}`,
     // },
     // {
-    //   name: "Annotation Batch Single",
-    //   url: "/annotation-batch-single",
+    //   name: "Annotation",
+    //   url: "/annotation",
     // },
     // {
     //   name: "Skipped Words",

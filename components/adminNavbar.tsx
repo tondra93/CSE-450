@@ -19,7 +19,7 @@ const AdminNavbar = ({ children }) => {
     },
     {
       name: "Load Data",
-      url: "/admin/load-data",
+      url: "/load-data",
     },
     {
       name: "Assign Annotators",
