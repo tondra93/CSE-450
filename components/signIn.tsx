@@ -17,8 +17,6 @@ interface Values {
   password: string;
 }
 
-
-
 function Signin() {
   const { signIn, isLoading, isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -42,8 +40,8 @@ function Signin() {
     const { email, password } = values;
 
     const response = await signIn(email, password);
-    console.log({response});
-    
+    console.log({ response });
+
     if (response.status === "success") {
       showNotification({
         title: "SUCCESSFUL",

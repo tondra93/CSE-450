@@ -11,30 +11,30 @@ const AnnotatorNavbar = ({ children }) => {
     const response = signOut();
   };
   const items = [
-    {
-      name: "Annotated Data",
-      url: `/${user.id}`,
-    },
-    {
-      name: "Annotation",
-      url: "/annotation",
-    },
-    {
-      name: "Skipped Words",
-      url: "/skip-words",
-    },
-    {
-      name: "Validation",
-      url: "/validation",
-    },
-    {
-      name: "My Stats",
-      url: `/${user.id}/stats`,
-    },
-    {
-      name: "Instructions",
-      url: "/instructions",
-    },
+    // {
+    //   name: "Annotated Data",
+    //   url: `/${user.id}`,
+    // },
+    // {
+    //   name: "Annotation",
+    //   url: "/annotation",
+    // },
+    // {
+    //   name: "Skipped Words",
+    //   url: "/skip-words",
+    // },
+    // {
+    //   name: "Validation",
+    //   url: "/validation",
+    // },
+    // {
+    //   name: "My Stats",
+    //   url: `/${user.id}/stats`,
+    // },
+    // {
+    //   name: "Instructions",
+    //   url: "/instructions",
+    // },
   ];
   return (
     <Navbar items={items} name={user.name} handleLogout={handleLogout}>

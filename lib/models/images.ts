@@ -9,6 +9,10 @@ const imageSchema = new mongoose.Schema({
     type: String,
     max: 100,
   },
+  isAnnotated: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const imageModel =
