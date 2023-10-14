@@ -7,7 +7,7 @@ import axios from "axios";
 // import AdminNavbar from "../../components/adminNavbar";
 import useSWR from "swr";
 import Image from "next/image";
-import { Button } from "@mantine/core";
+import { Button, Loader } from "@mantine/core";
 import { ArrowLeft, ArrowRight } from "tabler-icons-react";
 import AnnotationSingle from "../components/image/annotationSingle";
 import AnnotatorNavbar from "../components/annotatorNavbar";
@@ -119,12 +119,14 @@ const LoadData: NextPage = () => {
         {imageList.map((e) => {
           return <Image alt="pic" src={e} height={500} width={500} />;
         })} */}
-        {imageList.length && parseInt(curIdx) < imageList.length && (
+        {imageList.length && parseInt(curIdx) < imageList.length ? (
           <AnnotationSingle
             imageUrl={imageList[curIdx]}
             nextPage={nextPage}
             lastIdx={curIdx}
           />
+        ) : (
+          <Loader />
         )}
         {/* <AnnotationSingle /> */}
         <div
