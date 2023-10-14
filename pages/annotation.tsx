@@ -21,28 +21,29 @@ import { webSiteUrl } from "../utils/urls";
 import LandingPage from "./landingPage";
 
 const Annotation = ({ doc }) => {
+  console.log(doc);
   const [comment, setComment] = useState<String>();
   const [genre, setGenere] = useState<String>();
   const [value, setValue] = useState(doc);
   const [tokens, setTokens] = useState([]);
   const [numberOfWords, setNumberOfWords] = useState<Number>(0);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = tokenize(value.data.sentence);
-        const words = response;
-        const wordsObject = words.map((e, idx) => {
-          return {
-            id: idx + 1,
-            word: e,
-          };
-        });
-        setTokens(wordsObject);
-        setNumberOfWords(words.length);
-      } catch (err) {}
-    })();
-  }, [value.data.sentence]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response = tokenize(value.data.sentence);
+  //       const words = response;
+  //       const wordsObject = words.map((e, idx) => {
+  //         return {
+  //           id: idx + 1,
+  //           word: e,
+  //         };
+  //       });
+  //       setTokens(wordsObject);
+  //       setNumberOfWords(words.length);
+  //     } catch (err) {}
+  //   })();
+  // }, [value.data.sentence]);
 
   const handleNext = async () => {
     const response = await axios.post("/api/dataset/update-photo", {
@@ -60,7 +61,7 @@ const Annotation = ({ doc }) => {
     setGenere("");
   };
   console.log({ genre });
-
+  console.log(value);
   return (
     <AnnotatorNavbar>
       <div>
@@ -76,7 +77,7 @@ const Annotation = ({ doc }) => {
                   radius="md"
                   height={400}
                   fit="contain"
-                  src={value.data.photo_url}
+                  src={value.data?.photo_url}
                 />
               </div>
               <div style={{ marginTop: "2rem" }}>
@@ -116,13 +117,14 @@ export default Annotation;
 export async function getServerSideProps(ctx: any) {
   await connectDb();
   const { token } = ctx.req.cookies;
+  console.log(token);
   // const { data } = await axios.get(`${webSiteUrl}/api/dataset/get-photo`, {
-  const { data } = await axios.post(`/api/dataset/get-photo`, {
-    token,
-  });
+  // const { data } = await axios.post(`/api/dataset/get-photo`, {
+  //   token,
+  // });
   return {
     props: {
-      doc: data,
+      doc: { },
     },
   };
 }

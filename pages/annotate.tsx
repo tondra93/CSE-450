@@ -4,8 +4,8 @@ import { storage } from "../lib/src/firebase";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import axios from "axios";
 
-const Annotate: NextPage = ({ imageUrl }) => {
-  console.log(imageUrl);
+const Annotate: NextPage = ( ) => {
+ // console.log(imageUrl);
   //   console.log(imageUrl);
   //   const [imageUrl, setImageUrl] = useState();
   //   const [photo, setPhoto] = useState();
@@ -23,7 +23,8 @@ const Annotate: NextPage = ({ imageUrl }) => {
   return (
     <>
       {/* <button onClick={uploadDatabase}>upload</button> */}
-      <img src={imageUrl} alt="photo" />
+      {/* <img src={imageUrl} alt="photo" /> */}
+      Hello World
     </>
   );
 };

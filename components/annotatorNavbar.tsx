@@ -19,22 +19,30 @@ const AnnotatorNavbar = ({ children }) => {
       name: "Annotation",
       url: "/annotation",
     },
-    {
-      name: "Skipped Words",
-      url: "/skip-words",
-    },
-    {
-      name: "Validation",
-      url: "/validation",
-    },
-    {
-      name: "My Stats",
-      url: `/${user.id}/stats`,
-    },
-    {
-      name: "Instructions",
-      url: "/instructions",
-    },
+    // {
+    //   name: "Annotation Batch",
+    //   url: "/annotation-batch",
+    // },
+    // {
+    //   name: "Annotation Batch Single",
+    //   url: "/annotation-batch-single",
+    // },
+    // {
+    //   name: "Skipped Words",
+    //   url: "/skip-words",
+    // },
+    // {
+    //   name: "Validation",
+    //   url: "/validation",
+    // },
+    // {
+    //   name: "My Stats",
+    //   url: `/${user.id}/stats`,
+    // },
+    // {
+    //   name: "Instructions",
+    //   url: "/instructions",
+    // },
   ];
   return (
     <Navbar items={items} name={user.name} handleLogout={handleLogout}>
