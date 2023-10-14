@@ -52,10 +52,13 @@ export default async function handler(
         },
       },
     ]);
-
-    images = images[0]?.image?.filter((e) => {
-      return !annotations?.includes(e?.imageUrl);
-    });
+    // console.log(images.length);
+    images =
+      images.length > 0
+        ? images[0]?.image?.filter((e) => {
+            return !annotations?.includes(e?.imageUrl);
+          })
+        : [];
 
     res.json({
       status: "success",
