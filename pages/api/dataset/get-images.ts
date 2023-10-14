@@ -36,7 +36,7 @@ export default async function handler(
 
     const annotations = (await AnnotationModel.find({})).map((e) => e.imageUrl);
     // console.log(annotations);
-
+    console.log(userId);
     let images = await userAnnotationModel.aggregate([
       {
         $lookup: {
@@ -44,6 +44,11 @@ export default async function handler(
           localField: "annotationFolder",
           foreignField: "imageType",
           as: "image",
+        },
+      },
+      {
+        $match: {
+          user: mongoose.Types.ObjectId(userId),
         },
       },
     ]);
@@ -54,6 +59,7 @@ export default async function handler(
 
     res.json({
       status: "success",
+      total: images.length,
       // images: images[0].images,
       images,
       // annotations,
