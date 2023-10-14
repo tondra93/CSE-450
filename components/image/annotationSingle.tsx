@@ -7,7 +7,7 @@ import { Slider } from "@mantine/core";
 import axios from "axios";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
@@ -17,6 +17,7 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
   const [classLabel, setClassLabel] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [relevance, setRevelvance] = useState("");
+  // const [imageUrl, setImgUrl] = useState("");
   const token = localStorage.getItem("token");
 
   //   const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
@@ -29,7 +30,22 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
     "Others",
   ];
   const classLabels = ["Hateful", "Non Hateful"];
-  const relevancePercantages = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((e) => e.toString());
+  const relevancePercantages = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(
+    (e) => e.toString()
+  );
+
+  const getImageForAnnotation = async () => {
+    axios
+      .get("/api/dataset/get-image", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        // console.log(response.data);
+        setImgUrl(response.data);
+      });
+  };
 
   const submitAnnotation = async () => {
     // console.log("annotation", annotation);
@@ -49,7 +65,7 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
     }
     setSubmitting(true);
     const response = axios.post(
-      "/api/dataset/save-image-label",
+      "/api/dataset/annotate",
       {
         imageUrl,
         imageText,
@@ -72,22 +88,27 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
       })
       .then((response) => {
         // localStorage.setItem("")
-
-        localStorage.setItem("lastIdx", (parseInt(lastIdx) + 1).toString());
-
+        // localStorage.setItem("lastIdx", "2");
+        // localStorage.removeItem("lastIdx");
+        // localStorage.setItem("lastIdx", (parseInt(lastIdx) + 1).toString());
+        // nextPage();
         setImageText("");
         setTargetAudience("");
         setClassLabel("");
         setRevelvance("");
         setSubmitting(false);
-        // nextPage();
-        window.location.reload();
+        nextPage();
+        // window.location.reload();
         // setSubmitting(false);
       })
       .catch((e) => {
         setSubmitting(false);
       });
   };
+
+  useEffect(() => {
+    // getImageForAnnotation();
+  }, []);
 
   return (
     <div>
@@ -107,6 +128,7 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
           onChange={(e) => {
             setImageText(e.target.value);
           }}
+          value={imageText}
         />
         <Select
           data={targetAudienceOptions}

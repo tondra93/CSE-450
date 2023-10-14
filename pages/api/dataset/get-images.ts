@@ -5,6 +5,7 @@ import userAnnotationModel from "../../../lib/models/user-annotation";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../../lib/src/firebase";
 import mongoose from "mongoose";
+import AnnotationModel from "../../../lib/models/annotation";
 
 interface jwtPayload {
   id: string;
@@ -33,60 +34,30 @@ export default async function handler(
     //   .select("annotationFolder")
     //   .exec();
 
-    const images = await userAnnotationModel.aggregate([
+    const annotations = (await AnnotationModel.find({})).map((e) => e.imageUrl);
+    // console.log(annotations);
+
+    let images = await userAnnotationModel.aggregate([
       {
         $lookup: {
           from: "images",
           localField: "annotationFolder",
           foreignField: "imageType",
-          as: "images",
-        },
-      },
-      // {
-      //   $unwind: {
-      //     path: "$images",
-      //     preserveNullAndEmptyArrays: true,
-      //   },
-      // },
-      {
-        $match: {
-          user: mongoose.Types.ObjectId(userId),
-        },
-      },
-      {
-        $project: {
-          images: 1,
+          as: "image",
         },
       },
     ]);
 
-    // console.log(images);
+    images = images[0]?.image?.filter((e) => {
+      return !annotations?.includes(e?.imageUrl);
+    });
 
-    // const prom = new Promise((resolve, reject) => {
-    //   const folderRef = ref(storage, folder.annotationFolder);
-
-    //   listAll(folderRef)
-    //     .then((res) => {
-    //       const fileurls = res.items.map((itemRef) => {
-    //         return getDownloadURL(itemRef);
-    //       });
-    //       return Promise.all(fileurls);
-    //     })
-    //     .then((res) => {
-    //       resolve(res);
-    //     })
-    //     .catch((e) => {
-    //       reject(e);
-    //     });
-    // });
-
-    // const fileurls = await prom;
-    // console.log(fileurls);
-    // console
-    // res.end();
     res.json({
       status: "success",
-      images: images[0].images.map((e) => e.imageUrl),
+      // images: images[0].images,
+      images,
+      // annotations,
+      // images: images[0].images.map((e) => e.imageUrl),
     });
   } catch (e) {
     console.log(e);

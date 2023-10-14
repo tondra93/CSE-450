@@ -10,15 +10,15 @@ export default async function handler(req, res) {
   const data = jwt.verify(token, process.env.JWT_SECRET);
   const userId = data.id;
 
-  await User.findByIdAndUpdate(
-    userId,
-    {
-      lastAnnotated: annotation._id,
-    },
-    {
-      new: true,
-    }
-  );
+  // await User.findByIdAndUpdate(
+  //   userId,
+  //   {
+  //     lastAnnotated: annotation._id,
+  //   },
+  //   {
+  //     new: true,
+  //   }
+  // );
   res.json({
     status: "success",
     annotation,

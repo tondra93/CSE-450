@@ -3,34 +3,23 @@ import { useEffect, useState } from "react";
 
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import axios from "axios";
-import { storage } from "../../lib/src/firebase";
-import AdminNavbar from "../../components/adminNavbar";
+// import { storage } from "../../lib/src/firebase";
+// import AdminNavbar from "../../components/adminNavbar";
 import useSWR from "swr";
 import Image from "next/image";
 import { Button } from "@mantine/core";
 import { ArrowLeft, ArrowRight } from "tabler-icons-react";
-import AnnotationSingle from "../../components/image/annotationSingle";
+import AnnotationSingle from "../components/image/annotationSingle";
+import AnnotatorNavbar from "../components/annotatorNavbar";
 
 const LoadData: NextPage = () => {
   const [imageUrl, setImageUrl] = useState();
-  const [imageList, setImageList] = useState([
-    "https://i.imgflip.com/4/1g8my4.jpg",
-    "https://i.imgflip.com/4/261o3j.jpg",
-    "https://i.imgflip.com/4/3oevdk.jpg",
-  ]);
+  const [imageList, setImageList] = useState([]);
   const [curIdx, setCurIdx] = useState(0);
   const [photo, setPhoto] = useState();
 
   useEffect(() => {
     // setCurIdx(parseInt(lastIdx));
-    const lastIdx = localStorage.getItem("lastIdx")
-      ? localStorage.getItem("lastIdx")
-      : 0;
-    setImageList((prev) => {
-      const newState = [...prev];
-      newState.splice(0, parseInt(lastIdx));
-      return newState;
-    });
   }, []);
   // const imageListRef = ref(storage, "/");
 
@@ -45,8 +34,9 @@ const LoadData: NextPage = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response.data.images);
-      // setImageList(response.data.images.map((e) => e.imageUrl));
+      // console.log(response.data.images);
+      setImageList(response.data.images.map((e) => e.imageUrl));
+      // console.log(response.data.images);
       // console.log(response.data.annotationFolder);
       // const storageRef = ref(storage, response.data.annotationFolder);
       // listAll(storageRef).then((res) => {
@@ -79,7 +69,7 @@ const LoadData: NextPage = () => {
   };
 
   useEffect(() => {
-    // getUserMappedFolder();
+    getUserMappedFolder();
   }, []);
 
   // useEffect(() => {
@@ -114,7 +104,7 @@ const LoadData: NextPage = () => {
     setPhoto(res.data.data.photo_url);
   };
   return (
-    <AdminNavbar>
+    <AnnotatorNavbar>
       <div
         style={{
           display: "flex",
@@ -136,6 +126,7 @@ const LoadData: NextPage = () => {
             lastIdx={curIdx}
           />
         )}
+        {/* <AnnotationSingle /> */}
         <div
           style={{
             display: "flex",
@@ -162,7 +153,7 @@ const LoadData: NextPage = () => {
           </Button>
         </div>
       </div>
-    </AdminNavbar>
+    </AnnotatorNavbar>
   );
 };
 
