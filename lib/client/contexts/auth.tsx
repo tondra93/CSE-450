@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             }
             if (
               (router.pathname === "/" ||
-                router.pathname.startsWith("/annotation")) &&
+                router.pathname.startsWith("/annotationSingle")) &&
               role === "admin"
             ) {
               router.replace("/admin");
