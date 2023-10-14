@@ -34,8 +34,8 @@ const LoadData: NextPage = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      // console.log(response.data.images);
-      setImageList(response.data.images.map((e) => e.imageUrl));
+      console.log(response.data.images?.map((e) => e?.imageUrl));
+      setImageList(response.data.images?.map((e) => e?.imageUrl));
       // console.log(response.data.images);
       // console.log(response.data.annotationFolder);
       // const storageRef = ref(storage, response.data.annotationFolder);

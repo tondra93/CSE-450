@@ -36,7 +36,7 @@ export default async function handler(
 
     const annotations = (await AnnotationModel.find({})).map((e) => e.imageUrl);
     // console.log(annotations);
-
+    console.log(userId);
     let images = await userAnnotationModel.aggregate([
       {
         $lookup: {
@@ -46,14 +46,23 @@ export default async function handler(
           as: "image",
         },
       },
+      {
+        $match: {
+          user: mongoose.Types.ObjectId(userId),
+        },
+      },
     ]);
-
-    images = images[0]?.image?.filter((e) => {
-      return !annotations?.includes(e?.imageUrl);
-    });
+    // console.log(images.length);
+    images =
+      images.length > 0
+        ? images[0]?.image?.filter((e) => {
+            return !annotations?.includes(e?.imageUrl);
+          })
+        : [];
 
     res.json({
       status: "success",
+      total: images.length,
       // images: images[0].images,
       images,
       // annotations,

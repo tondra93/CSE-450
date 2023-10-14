@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 router.pathname.startsWith("/admin")) &&
               role === "annotator"
             ) {
-              router.push("/load-data");
+              router.push("/admin/load-data");
             }
             if (
               (router.pathname === "/" ||
