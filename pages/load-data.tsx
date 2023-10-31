@@ -28,13 +28,17 @@ const LoadData: NextPage = () => {
   // };
 
   const getUserMappedFolder = async () => {
+    console.log("function called");
     try {
+      console.log("hello there nice to meet you");
       const response = await axios.get("/api/dataset/get-images", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response.data.images?.map((e) => e?.imageUrl));
+      // console.log(response.data.images?.map((e) => e?.imageUrl))
+      console.log(response);
+      // setImageList([])z;
       setImageList(response.data.images?.map((e) => e?.imageUrl));
       // console.log(response.data.images);
       // console.log(response.data.annotationFolder);
@@ -51,20 +55,33 @@ const LoadData: NextPage = () => {
       //   });
       // });
     } catch (e) {
+      // console.log("error");
       console.log(e);
     }
     // const response = await useSWR("/api/load-data");
   };
+  // console.log("imageUrl", imageList[0]);
 
   const nextPage = () => {
     setCurIdx((prev) => {
-      return Math.min(imageList.length - 1, prev + 1);
+      if (prev + 1 < imageList.length) {
+        return prev + 1;
+      } else {
+        return prev;
+      }
+
+      // return Math.min(imageList.length - 1, prev + 1);
     });
   };
 
   const prevPage = () => {
     setCurIdx((prev) => {
-      return Math.max(0, prev - 1);
+      // return Math.max(0, prev - 1);
+      if (prev - 1 >= 0) {
+        return prev - 1;
+      } else {
+        return prev;
+      }
     });
   };
 
@@ -96,13 +113,15 @@ const LoadData: NextPage = () => {
   //   })
   // }, []);
 
-  const uploadDatabase = async () => {
-    const res = await axios.post("/api/load-data", {
-      url: imageUrl,
-    });
-    console.log({ res });
-    setPhoto(res.data.data.photo_url);
-  };
+  // const uploadDatabase = async () => {
+  //   const res = await axios.post("/api/load-data", {
+  //     url: imageUrl,
+  //   });
+  //   console.log({ res });
+  //   setPhoto(res.data.data.photo_url);
+  // };
+  console.log("imageList", imageList.length);
+  console.log("curIdx", curIdx);
   return (
     <AnnotatorNavbar>
       <div
@@ -119,13 +138,15 @@ const LoadData: NextPage = () => {
         {imageList.map((e) => {
           return <Image alt="pic" src={e} height={500} width={500} />;
         })} */}
-        {imageList.length && parseInt(curIdx) < imageList.length && (
-          <AnnotationSingle
-            imageUrl={imageList[curIdx]}
-            nextPage={nextPage}
-            lastIdx={curIdx}
-          />
-        )}
+        {imageList.length &&
+          parseInt(curIdx) < imageList.length &&
+          parseInt(curIdx) >= 0 && (
+            <AnnotationSingle
+              imageUrl={imageList[curIdx]}
+              nextPage={nextPage}
+              lastIdx={curIdx}
+            />
+          )}
         {/* <AnnotationSingle /> */}
         <div
           style={{

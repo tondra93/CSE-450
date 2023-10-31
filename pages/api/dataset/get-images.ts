@@ -23,6 +23,7 @@ export default async function handler(
   try {
     await connectDb();
     // const { user } = req.body;
+    console.log("get images api called");
     const token = req.headers.authorization.split(" ")[1];
     // console.log(req.headers);
     // console.log(token);
@@ -59,7 +60,7 @@ export default async function handler(
             return !annotations?.includes(e?.imageUrl);
           })
         : [];
-
+    console.log("images", images.length);
     res.json({
       status: "success",
       total: images.length,

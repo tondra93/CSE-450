@@ -14,24 +14,13 @@ import AnnotationSingle from "../../components/image/annotationSingle";
 const LoadData: NextPage = () => {
   const [imageUrl, setImageUrl] = useState();
   const [imageList, setImageList] = useState([
-    "https://i.imgflip.com/4/1g8my4.jpg",
-    "https://i.imgflip.com/4/261o3j.jpg",
-    "https://i.imgflip.com/4/3oevdk.jpg",
+    // "https://i.imgflip.com/4/1g8my4.jpg",
+    // "https://i.imgflip.com/4/261o3j.jpg",
+    // "https://i.imgflip.com/4/3oevdk.jpg",
   ]);
   const [curIdx, setCurIdx] = useState(0);
   const [photo, setPhoto] = useState();
 
-  useEffect(() => {
-    // setCurIdx(parseInt(lastIdx));
-    const lastIdx = localStorage.getItem("lastIdx")
-      ? localStorage.getItem("lastIdx")
-      : 0;
-    setImageList((prev) => {
-      const newState = [...prev];
-      newState.splice(0, parseInt(lastIdx));
-      return newState;
-    });
-  }, []);
   // const imageListRef = ref(storage, "/");
 
   // const getLastAnnotated = async () => {
@@ -79,7 +68,7 @@ const LoadData: NextPage = () => {
   };
 
   useEffect(() => {
-    // getUserMappedFolder();
+    getUserMappedFolder();
   }, []);
 
   // useEffect(() => {
