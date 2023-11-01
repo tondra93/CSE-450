@@ -29,7 +29,9 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
     "Others",
   ];
   const classLabels = ["Hateful", "Non Hateful"];
-  const relevancePercantages = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((e) => e.toString());
+  const relevancePercantages = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(
+    (e) => e.toString()
+  );
 
   const submitAnnotation = async () => {
     // console.log("annotation", annotation);
@@ -92,8 +94,8 @@ export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
   return (
     <div>
       <ToastContainer />
-
-      <Image alt="pic" src={imageUrl} height={500} width={500} />
+      <img alt="pic" src={imageUrl} height={500} width={500} />
+      {/* <Image alt="pic" src={imageUrl} height={500} width={500} /> */}
       <div
         style={{
           display: "flex",
