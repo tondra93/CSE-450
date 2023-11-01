@@ -10,6 +10,10 @@ import Image from "next/image";
 import React, { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
+const UnoptimizedImage = (props)=>{
+  return <Image {...props} unoptimized/>
+}
+
 export default function AnnotationSingle({ imageUrl, nextPage, lastIdx }) {
   const [annotation, setAnnotation] = React.useState("");
   const [targetAudience, setTargetAudience] = React.useState("");
