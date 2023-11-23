@@ -8,38 +8,24 @@ import {
   GET_STATS_TABLE_INFO,
 } from "../../lib/server/queries";
 import fs from "fs";
+import AnnotationModel from "../../lib/models/annotation";
 export default async function handler(req, res) {
   // const { id, numberOfWords } = req.body;
   await connectDb();
   try {
-    // const newStats = new Stats({ user_id: id });
-    // const stats = await newStats.save();
+    console.log("Hello");
+    
+    const data = await AnnotationModel.find({});
 
-    // const annotators = await FIND_ANNOTATORS();
-    // console.log(annotators);
-    // res.json({ annotators });
-
-    const data = await Dataset.aggregate([
-      { $match: { isSkipped: false, isAnnotated: true } },
-      { $limit: 10 },
-    ]);
-    let arr = [];
-    let finetuned = data.map((e) => {
-      for (const [key, value] of Object.entries(e.tag_sentence)) {
-        arr.push({
-          sentence: e.sentence,
-          words: key,
-          labels: value,
-        });
+    const stringData =  JSON.stringify(data, null, 2);
+    fs.writeFile('annotatedData', stringData, 'utf8', (err) => {
+      if (err) {
+        console.error('Error writing to file:', err);
+      } else {
+        console.log('JSON data has been written to');
       }
-      return arr;
     });
-    // console.log({ finetuned });
-    fs.writeFile("Output.json", finetuned, (err) => {
-      // In case of a error throw err.
-      if (err) throw err;
-    });
-    res.json({ finetuned });
+    res.json({ data });
   } catch (err) {
     res.json({ err });
   }
